@@ -10,6 +10,14 @@ services:
       - "15672:15672"
     volumes:
       - "rabbitmq_data:/bitnami"
+  redis:
+    image: "bitnami/redis:5.0.4"
+    environment:
+      - REDIS_PASSWORD=password123
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis_data:/bitnami/redis/data"
   celery-flower:
     image: gregsi/latest-celery-flower-docker:latest
     environment:
@@ -26,4 +34,6 @@ services:
       - "5555:5555"
 volumes:
   rabbitmq_data:
+    driver: local
+  redis_data:
     driver: local
