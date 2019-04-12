@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/Users/grega/.virtualenvs/celery-flower-test-1YhLvvfA/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": true,
+    "python.linting.enabled": true
+}
