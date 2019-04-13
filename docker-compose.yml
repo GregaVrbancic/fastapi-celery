@@ -10,6 +10,7 @@ services:
       - "15672:15672"
     volumes:
       - "rabbitmq_data:/bitnami"
+
   redis:
     image: "bitnami/redis:5.0.4"
     environment:
@@ -18,6 +19,7 @@ services:
       - "6379:6379"
     volumes:
       - "redis_data:/bitnami/redis/data"
+
   celery-flower:
     image: gregsi/latest-celery-flower-docker:latest
     environment:
@@ -29,7 +31,7 @@ services:
       - AMQP_PORT=5672
       - AMQP_ADMIN_HOST=rabbitmq
       - AMQP_ADMIN_PORT=15672
-      - FLOWER_BASIC_AUTH=grega:testiramo
+      - FLOWER_BASIC_AUTH=user:test
     ports:
       - "5555:5555"
 volumes:
