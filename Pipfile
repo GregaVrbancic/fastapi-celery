@@ -10,6 +10,5 @@ flake8 = "*"
 fastapi = "*"
 uvicorn = "*"
 celery = "*"
-pydantic = "*"
 redis = "*"
 
