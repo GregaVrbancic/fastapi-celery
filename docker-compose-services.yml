@@ -38,26 +38,6 @@ services:
       - rabbitmq
       - redis
 
-  fastapi:
-    build: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      - rabbitmq
-      - redis
-    volumes:
-      - "./:/app"
-    command: "poetry run hypercorn app/app/main:app --bind 0.0.0.0:8000 --reload"
-
-  worker:
-    build: .
-    depends_on:
-      - rabbitmq
-      - redis
-    volumes:
-      - "./:/app"
-    command: "poetry run celery worker -A app.app.worker.celery_worker -l info -Q test-queue -c 1"
-
 volumes:
   rabbitmq_data:
     driver: local
