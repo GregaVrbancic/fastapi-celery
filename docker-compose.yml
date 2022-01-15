@@ -56,7 +56,7 @@ services:
       - redis
     volumes:
       - "./:/app"
-    command: "poetry run celery worker -A app.app.worker.celery_worker -l info -Q test-queue -c 1"
+    command: "poetry run celery -A app.app.worker.celery_worker worker -l info -Q test-queue -c 1"
 
 volumes:
   rabbitmq_data:
