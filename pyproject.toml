@@ -7,7 +7,7 @@ authors = ["Grega Vrbančič <grega.vrbancic@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 flake8 = "^3.8.3"
-fastapi = "^0.60.1"
+fastapi = "^0.65.2"
 hypercorn = "^0.13.2"
 celery = "^5.2.3"
 redis = "^4.1.0"
