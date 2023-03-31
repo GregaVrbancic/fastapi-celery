@@ -10,7 +10,7 @@ flake8 = "^3.8.3"
 fastapi = "^0.70.0"
 hypercorn = "^0.13.2"
 celery = "^5.2.3"
-redis = "^4.1.0"
+redis = "^4.4.4"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.3"
