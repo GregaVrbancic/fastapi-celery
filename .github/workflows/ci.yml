@@ -1,7 +1,7 @@
 name: Build and Deploy to GKE
 
 on:
-  push_request:
+  pull_request:
     types:
       - closed
 
@@ -40,7 +40,7 @@ jobs:
 
     - name: Deploy to GKE
       run: |
-        kubectl apply -f k8s/
+        kubectl apply -f Manifests/
     
     - name: Clean Up
       run: |
