@@ -23,7 +23,7 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64
         push: true
-        tags: ${{ github.repository }}:${{ github.sha }}
+        tags: yashpimple22:${{ github.sha }}
 
     - name: Authenticate with GKE
       uses: google-github-actions/auth@v0
