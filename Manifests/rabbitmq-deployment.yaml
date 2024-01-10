@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fastapi-celery-default: "true"
+        io.kompose.service: rabbitmq
+    spec:
+      containers:
+        - image: bitnami/rabbitmq:3.7
+          name: rabbitmq
+          ports:
+            - containerPort: 4369
+              hostPort: 4369
+              protocol: TCP
+            - containerPort: 5672
+              hostPort: 5672
+              protocol: TCP
+            - containerPort: 25672
+              hostPort: 25672
+              protocol: TCP
+            - containerPort: 15672
+              hostPort: 15672
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /bitnami
+              name: rabbitmq-data
+      restartPolicy: Always
+      volumes:
+        - name: rabbitmq-data
+          persistentVolumeClaim:
+            claimName: rabbitmq-data
+status: {}

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: celery-flower
+  name: celery-flower
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: celery-flower
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fastapi-celery-default: "true"
+        io.kompose.service: celery-flower
+    spec:
+      containers:
+        - env:
+            - name: AMQP_ADMIN_HOST
+              value: rabbitmq
+            - name: AMQP_ADMIN_PASSWORD
+              value: bitnami
+            - name: AMQP_ADMIN_PORT
+              value: "15672"
+            - name: AMQP_ADMIN_USERNAME
+              value: user
+            - name: AMQP_HOST
+              value: rabbitmq
+            - name: AMQP_PASSWORD
+              value: bitnami
+            - name: AMQP_PORT
+              value: "5672"
+            - name: AMQP_USERNAME
+              value: user
+            - name: FLOWER_BASIC_AUTH
+              value: user:test
+          image: gregsi/latest-celery-flower-docker:latest
+          name: celery-flower
+          ports:
+            - containerPort: 5555
+              hostPort: 5555
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

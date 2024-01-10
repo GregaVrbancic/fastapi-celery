@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fastapi-celery-default: "true"
+        io.kompose.service: redis
+    spec:
+      containers:
+        - env:
+            - name: REDIS_PASSWORD
+              value: password123
+          image: bitnami/redis:5.0.4
+          name: redis
+          ports:
+            - containerPort: 6379
+              hostPort: 6379
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /bitnami/redis/data
+              name: redis-data
+      restartPolicy: Always
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-data
+status: {}

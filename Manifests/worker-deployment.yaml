@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: worker
+  name: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: worker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fastapi-celery-default: "true"
+        io.kompose.service: worker
+    spec:
+      containers:
+        - args:
+            - poetry
+            - run
+            - celery
+            - -A
+            - app.app.worker.celery_worker
+            - worker
+            - -l
+            - info
+            - -Q
+            - test-queue
+            - -c
+            - "1"
+          image: worker
+          name: worker
+          resources: {}
+          volumeMounts:
+            - mountPath: /app
+              name: worker-claim0
+      restartPolicy: Always
+      volumes:
+        - name: worker-claim0
+          persistentVolumeClaim:
+            claimName: worker-claim0
+status: {}

@@ -1,0 +1,47 @@
+name: Build and Deploy to GKE
+
+on:
+  push_request:
+    types:
+      - closed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        platforms: linux/amd64
+        push: true
+        tags: ${{ github.repository }}:${{ github.sha }}
+
+    - name: Authenticate with GKE
+      uses: google-github-actions/auth@v0
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        export_default_credentials: true
+
+    - name: Configure kubectl
+      run: |
+        echo ${{ secrets.GKE_KUBE_CONFIG }} | base64 --decode > kubeconfig.yaml
+        kubectl config view --flatten > mergedkubeconfig
+        mv mergedkubeconfig ~/.kube/config
+
+    - name: Deploy to GKE
+      run: |
+        kubectl apply -f k8s/
+    
+    - name: Clean Up
+      run: |
+        rm kubeconfig.yaml

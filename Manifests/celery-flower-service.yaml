@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: celery-flower
+  name: celery-flower
+spec:
+  ports:
+    - name: "5555"
+      port: 5555
+      targetPort: 5555
+  selector:
+    io.kompose.service: celery-flower
+status:
+  loadBalancer: {}
