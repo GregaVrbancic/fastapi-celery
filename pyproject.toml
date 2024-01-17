@@ -5,11 +5,11 @@ description = "FastAPI with Celery tasks minimal example"
 authors = ["Grega Vrbančič <grega.vrbancic@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "3.12.1"
 flake8 = "^3.8.3"
 fastapi = "^0.70.0"
 hypercorn = "^0.13.2"
-celery = "^5.2.3"
+celery = "^5.3.6"
 redis = "^4.1.0"
 
 [tool.poetry.dev-dependencies]
