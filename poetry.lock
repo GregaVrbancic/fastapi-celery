@@ -45,11 +45,11 @@ python-versions = "*"
 
 [[package]]
 name = "celery"
-version = "5.2.3"
+version = "5.3.6"
 description = "Distributed Task Queue."
 category = "main"
 optional = false
-python-versions = ">=3.7,"
+python-versions = "3.12.1"
 
 [package.dependencies]
 billiard = ">=3.6.4.0,<4.0"
