@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   rabbitmq:
     image: "bitnami/rabbitmq:3.7"
